@@ -11,7 +11,7 @@ pool:
 variables:
   buildConfiguration: "Release"
   version: "1.0.0"
-  projectPath: "./src/SerilogSinkAzureQueueStoragev2/SerilogSinkAzureQueueStoragev2.csproj"
+  projectPath: "./src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj"
 
 steps:
 - task: NuGetToolInstaller@1
@@ -21,7 +21,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: './src/SerilogSinkAzureQueueStoragev2/SerilogSinkAzureQueueStoragev2.csproj'
+    projects: './src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj'
     arguments: "--configuration $(buildConfiguration)"
 
 - script: "dotnet pack $(projectPath) --output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --no-build --no-restore -p:Version=$(version).$(Build.BuildId)"
