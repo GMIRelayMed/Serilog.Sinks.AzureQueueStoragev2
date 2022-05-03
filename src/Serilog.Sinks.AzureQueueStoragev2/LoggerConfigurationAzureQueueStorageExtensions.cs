@@ -1,7 +1,6 @@
 ﻿using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
-using System;
 
 namespace Serilog.Sinks.AzureQueueStoragev2
 {
