@@ -19,7 +19,7 @@ namespace Serilog.Sinks.AzureQueueStoragev2
         public void Emit(LogEvent logEvent)
         {
             QueueClient queueClient = new QueueClient(ConnectionString, QueueName);
-            queueClient.SendMessageAsync(JsonConvert.SerializeObject(logEvent.MessageTemplate)).SyncContextSafeWait();
+            queueClient.SendMessageAsync(JsonConvert.SerializeObject(logEvent)).SyncContextSafeWait();
         }
     }
 }
