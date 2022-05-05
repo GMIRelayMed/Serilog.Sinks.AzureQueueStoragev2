@@ -20,3 +20,11 @@ var log = new LoggerConfiguration().WriteTo
     .AzureQueueStorage("azureStorageAccountConnectionString", "azureQueueName")
     .CreateLogger();
 ```
+
+Optional parameter of restrictedToMinimumLevel which is an `LogEventLevel` enum that defines the minimum level of logging. By default this is set to 0 (verbose). You can override like so:
+
+```csharp
+var log = new LoggerConfiguration().WriteTo
+    .AzureQueueStorage(azureStorageAccountConnectionString, azureQueueName, LogEventLevel.Information)
+    .CreateLogger();
+```
