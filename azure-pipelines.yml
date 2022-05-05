@@ -1,0 +1,46 @@
+trigger:
+  branches:
+    include:
+      - "*"
+    exclude:
+      - "nb-*"
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: "Release"
+  version: "1.0.0"
+  projectPath: "./src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj"
+  testProject: './src/Serilog.Sinks.AzureQueueStoragev2.Tests/Serilog.Sinks.AzureQueueStoragev2.Tests.csproj'
+
+steps:
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '5.7.0'
+    checkLatest: true
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: './src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj'
+    arguments: "--configuration $(buildConfiguration)"
+
+- task: DotNetCoreCLI@2
+  displayName: 'unit tests'
+  inputs:
+    command: 'test'
+    projects: $(testProject)
+    arguments: '--configuration $(buildConfiguration) --no-build --no-restore'
+
+- script: "dotnet pack $(projectPath) --output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --no-build --no-restore -p:Version=$(version).$(Build.BuildId)"
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
+  displayName: "dotnet pack for $(Build.SourceBranchName)"
+
+- script: "dotnet pack $(projectPath) --output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --no-build --no-restore -p:Version=$(version)-rc-$(Build.SourceBranchName)-$(Build.BuildId)"
+  condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
+  displayName: "dotnet pack for branch $(Build.SourceBranchName)"
+  
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'nuget push $(Build.ArtifactStagingDirectory)\*.nupkg -ApiKey $(myNuGetApiKey) -Source https://api.nuget.org/v3/index.json'
