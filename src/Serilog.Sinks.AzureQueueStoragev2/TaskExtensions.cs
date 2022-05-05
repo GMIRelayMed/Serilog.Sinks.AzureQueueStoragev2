@@ -4,23 +4,9 @@ using System.Threading.Tasks;
 
 namespace Serilog.Sinks.AzureQueueStoragev2
 {
-    public static class TaskExtensions
+    internal static class TaskExtensions
     {
-        public static bool SyncContextSafeWait(this Task task, int timeout = -1)
-        {
-            SynchronizationContext current = SynchronizationContext.Current;
-            SynchronizationContext.SetSynchronizationContext(null);
-            try
-            {
-                return task.Wait(timeout);
-            }
-            finally
-            {
-                SynchronizationContext.SetSynchronizationContext(current);
-            }
-        }
-
-        public static T SyncContextSafeWait<T>(this Task<T> task, int timeout = -1)
+        internal static T SyncContextSafeWait<T>(this Task<T> task, int timeout = -1)
         {
             SynchronizationContext current = SynchronizationContext.Current;
             SynchronizationContext.SetSynchronizationContext(null);
