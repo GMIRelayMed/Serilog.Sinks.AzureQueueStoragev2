@@ -12,6 +12,7 @@ variables:
   buildConfiguration: "Release"
   version: "1.0.0"
   projectPath: "./src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj"
+  testProject: './src/ActsLifePickyUpper/Relaymed.ActsLifePickyUpper.App.Tests/Relaymed.ActsLifePickyUpper.App.Tests.csproj'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -23,6 +24,13 @@ steps:
     command: 'build'
     projects: './src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj'
     arguments: "--configuration $(buildConfiguration)"
+
+- task: DotNetCoreCLI@2
+  displayName: 'unit tests'
+  inputs:
+    command: 'test'
+    projects: $(testProject)
+    arguments: '--configuration $(buildConfiguration) --no-build --no-restore'
 
 - script: "dotnet pack $(projectPath) --output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration) --no-build --no-restore -p:Version=$(version).$(Build.BuildId)"
   condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
