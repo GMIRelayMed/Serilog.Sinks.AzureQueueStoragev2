@@ -1,8 +1,8 @@
-# Serilog.Sinks.AzureTableStoragev2
+# Serilog.Sinks.AzureQueueStoragev2
 
-**Package** - [Serilog.Sinks.AzureTableStoragev2](https://www.nuget.org/packages/Serilog.Sinks.AzureQueueStoragev2/) | .NET Standard 2.0
+**Package** - [Serilog.Sinks.AzureQueueStoragev2](https://www.nuget.org/packages/Serilog.Sinks.AzureQueueStoragev2/) | .NET Standard 2.0
 
-Package to write to an Azure Queue in an Azure Storage Account. This package replaces the deprecated and no longer maintained library of [Serilog.Sinks.AzureTableStorage](https://www.nuget.org/packages/Serilog.Sinks.AzureQueueStorage). 
+Package to write to an Azure Queue in an Azure Storage Account. This package replaces the deprecated and no longer maintained library of [Serilog.Sinks.AzureQueueStorage](https://www.nuget.org/packages/Serilog.Sinks.AzureQueueStorage). 
 
 It now uses the [Azure.Storage.Queues](https://www.nuget.org/packages/Azure.Storage.Queues/) which replaces the deprecated [WindowsAzure.Storage](https://www.nuget.org/packages/WindowsAzure.Storage/), which was used in the previous package.
 
