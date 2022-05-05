@@ -12,7 +12,7 @@ variables:
   buildConfiguration: "Release"
   version: "1.0.0"
   projectPath: "./src/Serilog.Sinks.AzureQueueStoragev2/Serilog.Sinks.AzureQueueStoragev2.csproj"
-  testProject: './src/ActsLifePickyUpper/Relaymed.ActsLifePickyUpper.App.Tests/Relaymed.ActsLifePickyUpper.App.Tests.csproj'
+  testProject: './src/Serilog.Sinks.AzureQueueStoragev2.Tests/Serilog.Sinks.AzureQueueStoragev2.Tests.csproj'
 
 steps:
 - task: NuGetToolInstaller@1
